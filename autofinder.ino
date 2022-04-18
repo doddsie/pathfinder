@@ -89,7 +89,22 @@ if (move) {
     
   long duration, inches;
   float feet;
+ pinMode(trigPin, OUTPUT);
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  pinMode(echoPin, INPUT);
+  duration = pulseIn(echoPin, HIGH);
 
+  feet = microsecondsToFeet(duration);
+  inches = microsecondsToInches(duration);
+  Serial.print(feet);
+  Serial.print("FT, ");
+  Serial.print(inches);
+  Serial.print("IN, ");
+  Serial.println();
    
  for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
     // in steps of 1 degree
