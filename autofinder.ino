@@ -42,9 +42,9 @@ void setup()
 
   //delay is used to control the speed, the lower the faster.
   //reverse(step,delay);
-  reverse(80,20);
+  //reverse(80,20);
   //forward(step,delay);
-  forward(80,20);
+  //forward(80,20);
     myservo.attach(4);  // attaches the servo on pin 9 to the servo object
 
 
@@ -62,22 +62,27 @@ void loop()
   digitalWrite(ENA, HIGH);
   digitalWrite(ENB, HIGH);
 
-  if (i++ % 50 == 0) {
+  if (i++ %60== 0) {
     move = !move;
   }
 if (move) {  
   Serial.println("loop 1");
 
-    digitalWrite(IN1, 1);
-    digitalWrite(IN2, 1);
-    digitalWrite(IN3, 1);
-    digitalWrite(IN4, 1);
-} else {
-  Serial.println("loop 0");
+  // IN1 = LEFT  BACKWARD
+  // IN1 = LEFT FORWARD
+  // IN3 - RIGHT FORWARD
+  // IN4 = RIGHT backward
 
     digitalWrite(IN1, 0);
     digitalWrite(IN2, 0);
     digitalWrite(IN3, 0);
+    digitalWrite(IN4, 100);
+} else {
+  Serial.println("loop 0");
+
+    digitalWrite(IN1, 0);
+    digitalWrite(IN3, 0);
+    digitalWrite(IN2, 0);
     digitalWrite(IN4, 0);
 }
 
@@ -85,23 +90,7 @@ if (move) {
   long duration, inches;
   float feet;
 
-  pinMode(trigPin, OUTPUT);
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  pinMode(echoPin, INPUT);
-  duration = pulseIn(echoPin, HIGH);
-
-  feet = microsecondsToFeet(duration);
-  inches = microsecondsToInches(duration);
-  Serial.print(feet);
-  Serial.print("FT, ");
-  Serial.print(inches);
-  Serial.print("IN, ");
-  Serial.println();
-  
+   
  for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
     // in steps of 1 degree
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
@@ -114,96 +103,3 @@ if (move) {
 
 
 }
-
-void reverse(int i, int j) {
-Serial.println("Code got reversion");
-  // set both motors ON
-  digitalWrite(ENA, HIGH);
-  digitalWrite(ENB, HIGH);
-
-  while (1)   {
-    digitalWrite(IN1, 0);
-    digitalWrite(IN2, 1);
-    digitalWrite(IN3, 0);
-    digitalWrite(IN4, 1);
-    delay(j);
-    i--;
-    if (i < 1) break; 
-
-    digitalWrite(IN1, 0);
-    digitalWrite(IN2, 1);
-    digitalWrite(IN3, 1);
-    digitalWrite(IN4, 0);
-    delay(j);  
-    i--;
-    if (i < 1) break;
-
-    digitalWrite(IN1, 1);
-    digitalWrite(IN2, 0);
-    digitalWrite(IN3, 1);
-    digitalWrite(IN4, 0);
-    delay(j);
-    i--;
-    if (i < 1) break;
-
-    digitalWrite(IN1, 1);
-    digitalWrite(IN2, 0);
-    digitalWrite(IN3, 0);
-    digitalWrite(IN4, 1);
-    delay(j);  
-    i--;
-    if (i < 1) break;
-  }
-
-  // set both motors OFF
-  digitalWrite(ENA, LOW);
-  digitalWrite(ENB, LOW);
-  
-}  // end reverse()
-
-void forward(int i, int j) {
-Serial.println("Code got forward");
-
-  // Set both motors ON
-  digitalWrite(ENA, HIGH);
-  digitalWrite(ENB, HIGH);
-
-  while (1)   {
-    digitalWrite(IN1, 0);
-    digitalWrite(IN2, 1);
-    digitalWrite(IN3, 0);
-    digitalWrite(IN4, 1);
-    delay(j);  
-    i--;
-    if (i < 1) break;
-
-    digitalWrite(IN1, 1);
-    digitalWrite(IN2, 0);
-    digitalWrite(IN3, 0);
-    digitalWrite(IN4, 1);
-    delay(j);
-    i--;
-    if (i < 1) break;
-
-    digitalWrite(IN1, 1);
-    digitalWrite(IN2, 0);
-    digitalWrite(IN3, 1);
-    digitalWrite(IN4, 0);
-    delay(j);  
-    i--;
-    if (i < 1) break;
-
-    digitalWrite(IN1, 0);
-    digitalWrite(IN2, 1);
-    digitalWrite(IN3, 1);
-    digitalWrite(IN4, 0);
-    delay(j);
-    i--;
-    if (i < 1) break;
-  }
-
-  // set both motors OFF
-  digitalWrite(ENA, LOW);
-  digitalWrite(ENB, LOW);
-
-}  // end forward()
