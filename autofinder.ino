@@ -1,6 +1,5 @@
 #include <Servo.h>
 
-
 const int ENA = 10;
 const int IN1 = 9;
 const int IN2 = 8;
@@ -8,8 +7,6 @@ const int IN4 = 7;
 const int IN3 = 6;
 const int ENB = 5;
 const int ledPin = 13;
-
-
 
 const int trigPin = 3;
 const int echoPin = 2;
